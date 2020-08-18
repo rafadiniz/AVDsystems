@@ -1,4 +1,4 @@
-class Cll {
+class Ctrl {
 
   float transY = -150;
 
@@ -10,7 +10,7 @@ class Cll {
   float cBorder;
   String bText = "show";
 
-  Cll() {
+  Ctrl() {
 
     //vertical faders
     f1 = new FaderV(160, 15, 40, 110);

@@ -1,31 +1,40 @@
 import ddf.minim.*;
 import ddf.minim.ugens.*;
 
+//general class minim (audio)
 Minim minim;
 AudioOutput[] out = new AudioOutput[5];
 
+//globals positions
 float posZ = 500;
 float posX = 650;
-float sizeL = 1;
 
+//globals dragged movement in X and Z position
 boolean locked = false; 
 boolean play = true;
 float xoff = 0;
 
+//global var used in amplitude of each cell system
 float distAmp = 0;
 
-Cll c1;
+//declaring controller
+Ctrl c1;
+
+//declaring systems
 DSystem[] systems = new DSystem[5];
 
 void setup() {
   size(1280, 720, P3D);
 
-  c1 = new Cll();
+  //initializing controller
+  c1 = new Ctrl();
 
+  //initializing systems
   for (int i = 0; i < 5; i++) {
     systems[i] = new DSystem();
   }
 
+  //initializing Minim objects outputs
   minim = new Minim(this);
   for (int i = 0; i < 5; i ++) {  
     out[i] = minim.getLineOut();
@@ -38,19 +47,20 @@ void setup() {
 void draw() {
   background(230, 230, 255);
 
+  //manual background
   noStroke();
   fill(0);
   rect(0, 150, width, 450);
 
+  //a constrain for X axis
   posX =  constrain(posX, 350, width-300);
 
+  //show the controller
   push();
-
   c1.show();
-
   pop();
 
-
+  ///--------------------lorenz and rossler together
   if (c1.state() == 1) {
 
     push();
@@ -89,9 +99,10 @@ void draw() {
       systems[2].name = false;
       systems[i].updateLorenz();
       systems[i].displayLorenz();
-      systems[i].transL = map(i, 0, 4, -250, 250);
-      systems[i].c = map(i, 0, 4, 1, 9);
-      systems[i].rot = map(i, 0, 4, 0, 360);
+      float distance = c1.f1.mapp(250, 1);
+      systems[i].transL = map(i, 0, 4, -distance, distance);
+      systems[i].c = map(i, 0, 5, 1, 9);
+      systems[i].rot = map(i, 0, 5, 0, 360);
 
       float mapX = map(posX, 350, width-300, -300, 300);
 
@@ -105,9 +116,9 @@ void draw() {
 
       out[i].playNote(
         i * 0.05, 0.05, 
-        new mySine(systems[i].rLorenz()*map(i, 0, 4, 10, 15)*baseFreq, 
+        new mySine(systems[i].rLorenz()*map(i, 0, 5, 10, 15)*baseFreq, 
         distAmp, 
-        map(i, 0, 4, -1, 1), 
+        map(i, 0, 5, -1, 1), 
         i)
         );
 
@@ -123,9 +134,10 @@ void draw() {
     for (int i = 0; i < 5; i ++) {
       systems[i].updateRossler();
       systems[i].displayRossler();
-      systems[i].transR = map(i, 0, 4, -250, 250);
+      float distance = c1.f2.mapp(250, 1);
+      systems[i].transR = map(i, 0, 4, -distance, distance);
       systems[i].bRossler = map(i, 0, 5, 0.2, 5.0);
-      systems[i].rot = map(i, 0, 4, 0, 360);
+      systems[i].rot = map(i, 0, 5, 0, 360);
 
       float mapX = map(posX, 350, width-300, -300, 300);
 
@@ -139,8 +151,8 @@ void draw() {
 
       out[i].playNote(
         i * 0.15, 0.05, 
-        new mySine(systems[i].rRossler()*map(i, 0, 4, 4, 8)*baseFreq, 
-        distAmp, map(i, 0, 4, -1, 1), 
+        new mySine(systems[i].rRossler()*map(i, 0, 5, 4, 8)*baseFreq, 
+        distAmp, map(i, 0, 5, -1, 1), 
         i)
         );
 
@@ -160,38 +172,33 @@ void draw() {
     noStroke();
     textSize(30);
     fill(0);
-    rect(width/2-100, 600-20, 240, 30);
+    rect(width/2-100, height-140, 240, 30);
     fill(220);
-    text("Lorenz System", width/2-80, 580, 0);
+    text("Lorenz System", width/2-80, height-140, 0);
   }
   if (c1.state() == 3) { 
 
     noStroke();
     textSize(30);
     fill(0);
-    rect(width/2-100, 600-20, 240, 30);
+    rect(width/2-100, height-140, 240, 30);
     fill(220);
-    text("Rossler System", width/2-80, 580, 0);
+    text("Rossler System", width/2-80, height-140, 0);
   }
-
-
-  //line(0,150,width,150);
-  //line(0,height-150,width,height-150);
-
-  //println(posX);
-  //println(x,y,z);
 }
 
 
 void mousePressed() {
   c1.mouseP();
 
-  if (play) { 
-    locked = true;
-  } else {
-    locked = false;
+  if (mouseY > 150) {
+    if (play) { 
+      locked = true;
+    } else {
+      locked = false;
+    }
+    xoff = mouseX-posX;
   }
-  xoff = mouseX-posX; 
   //yoff = mouseY-posZ;
 }
 

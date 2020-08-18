@@ -1,7 +1,7 @@
 
 class DSystem {
 
-  //Lorenz
+  //Lorenz globals
   float x = 0.01;
   float y = 0;
   float z = 0;
@@ -25,7 +25,7 @@ class DSystem {
 
   ArrayList<PVector> pointsLorenz = new ArrayList<PVector>();
 
-  //Rossler
+  //Rossler globals
   float xRossler = 0;
   float yRossler = 0;
   float zRossler = 0;
