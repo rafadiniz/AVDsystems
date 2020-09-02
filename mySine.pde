@@ -6,11 +6,15 @@ class mySine implements Instrument {
   float pos;
   int i;
 
-  mySine(float frequency, float amplitude, float p, int inter) {
-    
+  mySine(float frequency, float amplitude, float p, int inter, int waveF) {
     i = inter;
     pos = p;
-    sine = new Oscil( frequency, amplitude, Waves.TRIANGLE);
+    
+    if (waveF == 0) {
+      sine = new Oscil( frequency, amplitude, Waves.SINE);
+    } else if (waveF == 1) {
+      sine = new Oscil( frequency, amplitude, Waves.TRIANGLE);
+    }
     adsr = new ADSR(0.3, 0.1, 0.5, 0.5, 0.5);
     sine.patch(adsr);
   }

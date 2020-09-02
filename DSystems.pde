@@ -87,13 +87,9 @@ class DSystem {
   void displayLorenz() {
 
     push();
-
     tL += 0.08;
     translate(transL, 0, 0);
-
-
     noFill();
-
     if (name) {
       textFont(f);
       textSize(6);
@@ -106,9 +102,6 @@ class DSystem {
     //rotateX(radians(tL));
     rotateY(radians(tL+rot));
     //rotateZ(radians(tL+rot));
-    //rotateY(radians(rotYL));
-    //rotateZ(radians(rotZL));
-
     beginShape(LINE_STRIP);
     for (PVector v : pointsLorenz) {
       strokeWeight(strokeWL);
@@ -117,6 +110,7 @@ class DSystem {
       //PVector offset = PVector.random3D();
       //offset.mult(0.1);
       //v.add(offset);
+      //println("lorenz:", v.x);
     }
     endShape();
     pop();
@@ -136,11 +130,8 @@ class DSystem {
 
   void displayRossler() {
     push();
-
     tR += 0.06;
-
     translate(transR, 0, 0);
-
     if (name) {
       textFont(f);
       textSize(6);
@@ -155,9 +146,6 @@ class DSystem {
     rotateY(radians(tR + rot));
     //rotateZ(radians(tR + rot));
 
-    //rotateY(radians(rotYR));
-    //rotateZ(radians(rotZR));
-
     beginShape(LINE_STRIP);
     for (PVector v2 : pointsRossler) {
       strokeWeight(strokeWr);
@@ -170,6 +158,5 @@ class DSystem {
     endShape();
 
     pop();
-
   }
 }

@@ -19,8 +19,8 @@ class Ctrl {
     //f3 = new FaderV(190, 15, 30, 120);
 
     //horizontal faders
-    //f4 = new FaderH(260, 30, 160, 30);
-    //f5 = new FaderH(260, 100, 160, 30);
+    f4 = new FaderH(260, 50, 160, 30);
+    f5 = new FaderH(width/2+260, 50, 160, 30);
 
     //button toggle (interruptor)
     b1 = new Button(100, 30, 25, 25);
@@ -76,8 +76,8 @@ class Ctrl {
     //f3.display("3");
 
     //horizontal faders
-    //f4.display("4");
-    //f5.display("5");
+    f4.display("Freqs and Spacing");
+    f5.display("Freqs and Spacing");
 
     //buttons toggles
     b1.display("on");
@@ -110,8 +110,8 @@ class Ctrl {
     f2.mouseD(transY);
     //f3.mouseD(transY);
 
-    //f4.mouseD(transY);
-    //f5.mouseD(transY);
+    f4.mouseD(transY);
+    f5.mouseD(transY);
   }
 
   float mapFader1(float min, float max) {
