@@ -51,7 +51,7 @@ void draw() {
   noStroke();
   fill(0);
   rect(0, 150, width, 450);
-  
+
   //a constrain for X axis
   posX =  constrain(posX, 350, width-300);
 
@@ -84,7 +84,7 @@ void draw() {
     pop();
 
     float baseFreqL = c1.f1.mapp(100, 5000);
-    out[0].playNote(0.15, 0.05, new mySine(systems[0].rLorenz()*baseFreqL, 0.8, -1, 0,1));
+    out[0].playNote(0.15, 0.05, new mySine(systems[0].rLorenz()*baseFreqL, 0.8, -1, 0, 1));
 
     float baseFreqR = c1.f2.mapp(100, 5000);
     out[1].playNote(0.15, 0.05, new mySine(systems[1].rRossler()*baseFreqR*1.1, 0.8, 1, 1, 0));
@@ -175,10 +175,6 @@ void draw() {
 
   pop();
 
-  textSize(15);
-  text("2020", 10, height-10);
-  text("frame rate: " + nf(frameRate, 0, 1), 60, height-10);
-
   if (c1.state() == 2) {
     noStroke();
     textSize(30);
@@ -196,10 +192,19 @@ void draw() {
     fill(220);
     text("Rossler System", width/2-80, height-140, 0);
   }
-  
-  for(int i = 0; i < 300; i++){
-    stroke(0,100);
-    line(i,580+out[0].mix.get(i)*200,i+1,580+out[0].mix.get(i+1)*200);
+
+  //date (center) and framerate (right side)
+  fill(10);
+  textSize(15);
+  text("2020", width/2, height-10);
+  text("frame rate: " + nf(frameRate, 0, 1), width-120, height-10);
+
+  //wavetable in left side
+  for (int oNum = 0; oNum < 5; oNum++) {
+    for (int i = 0; i < 300; i++) {
+      stroke(0, 100);
+      line(10+i, 660+out[oNum].mix.get(i)*150, 10+i+1, 660+out[oNum].mix.get(i+1)*150);
+    }
   }
 }
 
